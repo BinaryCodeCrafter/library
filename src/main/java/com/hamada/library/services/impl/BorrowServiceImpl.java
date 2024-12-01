@@ -12,6 +12,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.SpringApplicationAotProcessor;
 import org.springframework.boot.SpringBootVersion;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.imageio.plugins.jpeg.JPEGImageReadParam;
 import java.time.LocalDate;
@@ -37,6 +38,7 @@ public class BorrowServiceImpl implements BorrowService {
 
 
     @Override
+    @Transactional
     public BorrowingRecordEntity borrowBook(Long bookId, Long patronID) {
 
         BookEntity bookEntity = bookRepository.findById(bookId).orElseThrow(
@@ -66,6 +68,7 @@ public class BorrowServiceImpl implements BorrowService {
     }
 
     @Override
+    @Transactional
     public BorrowingRecordEntity returnBook(Long bookId, Long patronId) {
         Optional<BorrowingRecordEntity> recordOptional = borrowRepository.findByBookAndPatronAndReturnDateIsNull(
                 bookRepository.findById(bookId).orElseThrow(() -> new RuntimeException("Book not found")),
