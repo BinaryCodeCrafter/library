@@ -3,16 +3,19 @@ package com.hamada.library.controllers;
 
 import com.hamada.library.domain.PatronEntity;
 import com.hamada.library.services.PatronService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import org.springframework.validation.annotation.Validated;
+
 import java.util.List;
 import java.util.Optional;
 
-@Controller
+@RestController
 public class PatronController {
 
     private final PatronService patronService;
@@ -24,14 +27,14 @@ public class PatronController {
 
 
     @PostMapping("/api/patrons")
-    public ResponseEntity<PatronEntity> create(@RequestBody final PatronEntity patronEntity){
+    public ResponseEntity<PatronEntity> create(@Valid @RequestBody final PatronEntity patronEntity){
         final PatronEntity savedPatronEntity=  patronService.create(patronEntity);
         return new ResponseEntity<PatronEntity>(savedPatronEntity , HttpStatus.CREATED);
     }
 
 
     @GetMapping("/api/patrons/{id}")
-    public ResponseEntity<PatronEntity> find(@PathVariable Long id){
+    public ResponseEntity<PatronEntity> find(@PathVariable @Valid Long id){
         Optional<PatronEntity> patronEntity = patronService.find(id);
         return patronEntity.map(patron -> new ResponseEntity<PatronEntity>(patron , HttpStatus.OK))
                 .orElse(new ResponseEntity<PatronEntity>(HttpStatus.NOT_FOUND));
@@ -44,8 +47,8 @@ public class PatronController {
 
     @PutMapping("/api/patrons/{id}")
     public ResponseEntity<PatronEntity> update(
-            @RequestBody final PatronEntity patronEntity,
-            @PathVariable Long id
+            @Valid  @RequestBody final PatronEntity patronEntity,
+            @PathVariable @Valid Long id
     ){
 
         if(!patronService.isPatronExists(id)){
@@ -59,7 +62,7 @@ public class PatronController {
     }
 
     @DeleteMapping("/api/patrons/{id}")
-    public ResponseEntity<Boolean> delete(@PathVariable Long id){
+    public ResponseEntity<Boolean> delete(@PathVariable @Valid Long id){
         if (!patronService.isPatronExists(id)){
             return new ResponseEntity<Boolean>(false , HttpStatus.NOT_FOUND);
         }

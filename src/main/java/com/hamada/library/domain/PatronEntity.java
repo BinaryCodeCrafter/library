@@ -3,6 +3,12 @@ package com.hamada.library.domain;
 
 import jakarta.persistence.*;
 
+
+
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+
 @Entity
 @Table(name = "patrons")
 public class PatronEntity {
@@ -22,10 +28,14 @@ public class PatronEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long ID;
 
+    @NotBlank(message = "Name is required")
     private String name;
 
+    @NotEmpty(message = "Contact Information is required")
     private String contactInformation;
 
+    @NotEmpty(message = "Email is required")
+    @Email(message = "Email should be valid")
     private String email;
 
 

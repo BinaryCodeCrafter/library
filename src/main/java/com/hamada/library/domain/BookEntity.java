@@ -3,22 +3,31 @@ package com.hamada.library.domain;
 
 import jakarta.persistence.*;
 
+import jakarta.validation.constraints.NotEmpty;
+
 @Entity
 @Table(name = "books")
 public class BookEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+
     private Long ID;
 
+    @NotEmpty(message = "Title is required")
     private String title;
 
+
+    @NotEmpty(message = "Author is required")
     private String author;
 
+    @NotEmpty(message = "ISBN is required")
     private String ISBN;
 
+    @NotEmpty(message = "Publication Year is required")
     private Integer publicationYear;
 
+    @NotEmpty(message = "Genre is required")
     private String genre;
 
     public BookEntity(Long ID, String title, String author, String ISBN, Integer publicationYear, String genre) {

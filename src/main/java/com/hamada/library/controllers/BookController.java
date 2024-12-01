@@ -3,16 +3,19 @@ package com.hamada.library.controllers;
 
 import com.hamada.library.domain.BookEntity;
 import com.hamada.library.services.BookService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
 
 @Controller
+@Validated
 public class BookController {
     private final BookService bookService;
 
@@ -32,7 +35,7 @@ public class BookController {
 
 
     @GetMapping("/api/books/{id}")
-    public ResponseEntity<BookEntity> find(@PathVariable final Long id){
+    public ResponseEntity<BookEntity> find(@PathVariable @Valid final Long id){
         final Optional<BookEntity> foundBookEntity = bookService.find(id);
        return foundBookEntity.map(book -> new ResponseEntity<BookEntity>(book , HttpStatus.OK))
                 .orElse(new ResponseEntity<BookEntity>(HttpStatus.NOT_FOUND));
@@ -48,8 +51,8 @@ public class BookController {
 
     @PutMapping("/api/books/{id}")
     public ResponseEntity<BookEntity> update(
-            @RequestBody final BookEntity bookEntity,
-            @PathVariable Long id){
+            @Valid @RequestBody final BookEntity bookEntity,
+            @PathVariable @Valid Long id){
 
         if(!bookService.isBookExists(id)){
             return new ResponseEntity<BookEntity>(bookEntity , HttpStatus.NOT_FOUND);
@@ -62,7 +65,7 @@ public class BookController {
     }
 
     @DeleteMapping("/api/books/{id}")
-    public ResponseEntity<Boolean> delete(@PathVariable Long id){
+    public ResponseEntity<Boolean> delete(@PathVariable @Valid Long id){
         if (!bookService.isBookExists(id)){
             return new ResponseEntity<Boolean>(false , HttpStatus.NOT_FOUND);
         }

@@ -3,6 +3,7 @@ package com.hamada.library.domain;
 
 import jakarta.persistence.*;
 
+import jakarta.validation.constraints.NotEmpty;
 import java.time.LocalDate;
 
 @Entity
@@ -16,11 +17,13 @@ public class BorrowingRecordEntity {
 
     @ManyToOne
     @JoinColumn(name = "book_id", nullable = false)
+    @NotEmpty(message = "Book ID is required")
     private BookEntity book;
 
 
     @ManyToOne
     @JoinColumn(name = "patron_id", nullable = false)
+    @NotEmpty(message = "Patron ID is required")
     private PatronEntity patron;
 
     private LocalDate borrowedDate;
