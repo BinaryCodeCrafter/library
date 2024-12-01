@@ -17,13 +17,11 @@ public class BorrowingRecordEntity {
 
     @ManyToOne
     @JoinColumn(name = "book_id", nullable = false)
-    @NotEmpty(message = "Book ID is required")
     private BookEntity book;
 
 
     @ManyToOne
     @JoinColumn(name = "patron_id", nullable = false)
-    @NotEmpty(message = "Patron ID is required")
     private PatronEntity patron;
 
     private LocalDate borrowedDate;

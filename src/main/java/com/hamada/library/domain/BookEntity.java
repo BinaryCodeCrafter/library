@@ -4,6 +4,7 @@ package com.hamada.library.domain;
 import jakarta.persistence.*;
 
 import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "books")
@@ -24,7 +25,7 @@ public class BookEntity {
     @NotEmpty(message = "ISBN is required")
     private String ISBN;
 
-    @NotEmpty(message = "Publication Year is required")
+    @NotNull(message = "Publication Year is required")
     private Integer publicationYear;
 
     @NotEmpty(message = "Genre is required")
