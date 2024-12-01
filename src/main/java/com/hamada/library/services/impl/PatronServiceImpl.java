@@ -4,6 +4,7 @@ import com.hamada.library.domain.PatronEntity;
 import com.hamada.library.repositories.PatronRepository;
 import com.hamada.library.services.PatronService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -25,6 +26,7 @@ public class PatronServiceImpl implements PatronService {
     }
 
     @Override
+    @Cacheable("patrons")
     public Optional<PatronEntity> find(Long ID) {
         return patronRepository.findById(ID);
     }

@@ -4,6 +4,7 @@ import com.hamada.library.domain.BookEntity;
 import com.hamada.library.repositories.BookRepository;
 import com.hamada.library.services.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -25,7 +26,8 @@ public class BookServiceImpl implements BookService {
         return bookRepository.save(bookEntity);
     }
 
-    @Override
+     @Override
+     @Cacheable("books")
     public Optional<BookEntity> find(Long ID) {
         return bookRepository.findById(ID);
     }
