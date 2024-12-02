@@ -1,6 +1,7 @@
 package com.hamada.library.domain;
 
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 
 import jakarta.validation.constraints.NotEmpty;
@@ -24,8 +25,10 @@ public class BorrowingRecordEntity {
     @JoinColumn(name = "patron_id", nullable = false)
     private PatronEntity patron;
 
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate borrowedDate;
 
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate returnDate;
 
     public Long getId() {

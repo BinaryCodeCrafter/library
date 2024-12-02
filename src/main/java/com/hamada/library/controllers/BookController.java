@@ -27,7 +27,7 @@ public class BookController {
 
     @PostMapping("/api/books")
     public ResponseEntity<BookEntity> create(
-        @RequestBody final BookEntity bookEntity){
+            @RequestBody final BookEntity bookEntity){
 
         final BookEntity savedBookEntity = bookService.create(bookEntity);
         return new ResponseEntity<BookEntity>(savedBookEntity , HttpStatus.CREATED);
@@ -37,7 +37,7 @@ public class BookController {
     @GetMapping("/api/books/{id}")
     public ResponseEntity<BookEntity> find(@PathVariable @Valid final Long id){
         final Optional<BookEntity> foundBookEntity = bookService.find(id);
-       return foundBookEntity.map(book -> new ResponseEntity<BookEntity>(book , HttpStatus.OK))
+        return foundBookEntity.map(book -> new ResponseEntity<BookEntity>(book , HttpStatus.OK))
                 .orElse(new ResponseEntity<BookEntity>(HttpStatus.NOT_FOUND));
     }
 
